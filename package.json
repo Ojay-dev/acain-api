@@ -1,0 +1,51 @@
+{
+  "name": "acain-api",
+  "version": "1.0.0",
+  "description": "A book publishing app for children.",
+  "main": "index.js",
+  "engines": {
+    "node": "12.16.x",
+    "yarn": ">=1.15.2 || 1.22.x"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "rm -rf ./src/build && babel ./src/. --out-dir ./src/build --copy-files",
+    "start": "node ./src/build/index.js",
+    "start:dev": "nodemon --exec babel-node src/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/CISH-NG/acain-api.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/CISH-NG/acain-api/issues"
+  },
+  "homepage": "https://github.com/CISH-NG/acain-api#readme",
+  "dependencies": {
+    "@babel/polyfill": "^7.11.5",
+    "@hapi/joi": "^17.1.1",
+    "babel-watch": "^7.0.0",
+    "body-parser": "^1.19.0",
+    "cors": "^2.8.5",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "mongoose": "^5.10.5",
+    "swagger-ui-express": "^4.1.4"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.11.6",
+    "@babel/core": "^7.11.6",
+    "@babel/node": "^7.10.5",
+    "@babel/preset-env": "^7.11.5",
+    "@babel/register": "^7.11.5",
+    "eslint": "^7.9.0",
+    "eslint-config-airbnb-base": "^14.2.0",
+    "eslint-plugin-import": "^2.22.0",
+    "nodemon": "^2.0.4",
+    "prettier": "^2.1.2",
+    "pretty-quick": "^3.0.2"
+  }
+}
