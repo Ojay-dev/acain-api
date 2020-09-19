@@ -8,5 +8,23 @@ export default {
       tlds: { allow: true }
     })
     .trim()
-    .required()
+    .required(),
+  username: Joi.string()
+    .regex(/^(?=.{4,20}$)(?![_.])(?!.*[_.]{2})[a-zA-Z0-9._]+(?<![_.])$/)
+    .message(
+      'username must be 4 to 20 characters long and should contain no spaces'
+    ),
+  password: Joi.string()
+    .regex(/^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?.&])[A-Za-z\d@$!%*.#?&]{8,20}$/)
+    .message(
+      'password must be 8-20 characters long, and must contain at least one letter, one number and one special character'
+    ),
+  name: Joi.string()
+    .regex(/^[a-zA-Z]{3,}(?: [a-zA-Z]+){0,2}$/)
+    .message(
+      'name should be at least 4 characters long and just your first and last name'
+    ),
+  phone: Joi.string()
+    .regex(/^\+[1-9]{1,3}[0-9]{3,14}$/)
+    .message('input phone number with country code. ex, +234...')
 };

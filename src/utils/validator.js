@@ -6,6 +6,6 @@ export default async (schema, toValidate, res, next) => {
     await schema.validateAsync(toValidate);
     next();
   } catch (error) {
-    return Response.validationError(res, error.message);
+    return Response.badRequestError(res, error.message);
   }
 };
