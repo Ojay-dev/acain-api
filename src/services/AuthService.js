@@ -26,10 +26,29 @@ class AuthService {
     if (username) {
       customError('username is already being used', 'Bad Request', 400);
     }
-    const user = (await User.create(data)).toObject();
+    const user = (await User.create(data)).toJSON();
     user.access_token = signToken(user._id);
     //  TODO: Send user verification email
     return user;
+  }
+
+  /**
+   * Authenticates a single user
+   * @param {object} param authentication request
+   * @return {object} user object if successful
+   * throws an error if user cannot be authenticated.
+   */
+  static async authenticateSingleUser(param) {
+    const user = await User.findOne({ email: param.email });
+    if (!user || !user.authenticate(param.password)) {
+      customError('invalid credentials', 'Authentication Error', 401);
+    }
+    const token = signToken(user._id);
+
+    return {
+      ...user.toJSON(),
+      access_token: token
+    };
   }
 }
 

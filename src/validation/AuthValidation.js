@@ -21,6 +21,21 @@ class AuthValidation {
     });
     return validator(schema, req.body, res, next);
   }
+
+  /**
+   * Validates signin
+   * @param {object} req request object
+   * @param {object} res response object
+   * @param {function} next next middleware
+   * @returns {function} validation function
+   */
+  static validateSignIn(req, res, next) {
+    const schema = Joi.object().keys({
+      email: format.email.required(),
+      password: Joi.string().required()
+    });
+    return validator(schema, req.body, res, next);
+  }
 }
 
 export default AuthValidation;

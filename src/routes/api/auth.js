@@ -9,5 +9,10 @@ router.post(
   AuthValidation.validateUserCreation,
   AuthController.createSingleUser
 );
+router.post(
+  '/signin',
+  AuthValidation.validateSignIn,
+  AuthController.signInUser
+);
 
 export default router;
