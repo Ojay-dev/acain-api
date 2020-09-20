@@ -41,11 +41,9 @@ const UserSchema = new Schema(
     },
     phoneVerifiedAt: Date,
     avatar: String,
-    social: {
-      facebook: String,
-      twiter: String,
-      linkedIn: String
-    }
+    facebook: String,
+    twitter: String,
+    linkedIn: String
   },
   { timestamps: true }
 );

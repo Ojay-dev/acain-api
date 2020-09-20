@@ -1,7 +1,7 @@
 /* eslint-disable operator-linebreak */
 /* eslint-disable no-underscore-dangle */
 import User from '../models/User';
-import { signToken } from '../utils/jwtservice';
+import { signToken, verifyToken } from '../utils/jwtservice';
 import {
   duplicateCheck,
   parallelRequests,
@@ -10,6 +10,7 @@ import {
 } from '../utils/util';
 import { customError } from '../errors';
 import VerificationCode from '../models/VerificationCode';
+import Response from '../utils/response';
 
 const dupCode = (code) => duplicateCheck(VerificationCode, { code });
 const createExpire = (time) => {
@@ -33,12 +34,10 @@ class AuthService {
     );
     await sendMail(
       email,
-      'Verify Account at ACAIN',
+      'VERIFY EMAIL WITH ACAIN',
       `
     <div style="text-align: center;"><span style="font-family:verdana,geneva,sans-serif;">
       <p>
-          Thank you for signing up on ACAIN. 
-          <br>
           Kindly verify your email address.
       </p>
       <br>
@@ -216,6 +215,39 @@ class AuthService {
     user.password = password;
     await user.save();
     return true;
+  }
+
+  /**
+   * Middleware that decode user from
+   * jwt in authorization and attaches
+   * user to the request object or fails.
+   * @returns {function} middleware function
+   */
+  static protectRoute() {
+    return async (req, res, next) => {
+      try {
+        const token = req.headers.authorization;
+        if (!token) {
+          return Response.authenticationError(
+            res,
+            'put Bearer token in the authorization header.'
+          );
+        }
+        const data = verifyToken(token);
+        const _id = data.payload;
+        const user = await User.findById(_id);
+        if (!user) {
+          return Response.authenticationError(res, 'unauthenticated');
+        }
+        req.user = user;
+        next();
+      } catch (error) {
+        if (error.name === 'JsonWebTokenError') {
+          return Response.authenticationError(res, 'unauthenticated');
+        }
+        next(error);
+      }
+    };
   }
 }
 
