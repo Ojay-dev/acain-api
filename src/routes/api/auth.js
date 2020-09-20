@@ -14,5 +14,21 @@ router.post(
   AuthValidation.validateSignIn,
   AuthController.signInUser
 );
+router.post(
+  '/resend',
+  AuthValidation.validateVerificationResend,
+  AuthController.resendVerificationEmail
+);
+router
+  .route('/forgot-password')
+  .put(
+    AuthValidation.validatePasswordChangeFromCode,
+    AuthController.changePasswordFromCode
+  )
+  .post(
+    AuthValidation.validateVerificationResend,
+    AuthController.forgotPassword
+  );
+router.put('/verify-email', AuthController.verifyUserEmail);
 
 export default router;

@@ -27,6 +27,7 @@
   "dependencies": {
     "@babel/polyfill": "^7.11.5",
     "@hapi/joi": "^17.1.1",
+    "@sendgrid/mail": "^7.2.6",
     "babel-watch": "^7.0.0",
     "bcrypt": "^5.0.0",
     "body-parser": "^1.19.0",

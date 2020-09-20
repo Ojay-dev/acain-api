@@ -36,6 +36,44 @@ class AuthValidation {
     });
     return validator(schema, req.body, res, next);
   }
+
+  /**
+   * Validates verification code resend
+   * @param {object} req request object
+   * @param {object} res response object
+   * @param {function} next next middleware
+   * @returns {function} validation function
+   */
+  static validateVerificationResend(req, res, next) {
+    const schema = Joi.alternatives(
+      Joi.object().keys({
+        type: Joi.string().regex(/phone/).required(),
+        phone: format.phone.required()
+      }),
+      Joi.object().keys({
+        type: Joi.string()
+          .regex(/(email|password)/)
+          .required(),
+        email: format.email.required()
+      })
+    );
+    return validator(schema, req.body, res, next);
+  }
+
+  /**
+   * Validates password change from code
+   * @param {object} req request object
+   * @param {object} res response object
+   * @param {function} next next middleware
+   * @returns {function} validation function
+   */
+  static validatePasswordChangeFromCode(req, res, next) {
+    const schema = Joi.object().keys({
+      password: format.password.required(),
+      confirmPassword: format.password.required()
+    });
+    return validator(schema, req.body, res, next);
+  }
 }
 
 export default AuthValidation;
