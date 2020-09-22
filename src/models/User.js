@@ -39,6 +39,19 @@ const UserSchema = new Schema(
       type: Boolean,
       default: false
     },
+    about: {
+      type: String,
+      required: true
+    },
+    role: {
+      type: String,
+      default: 'author'
+    },
+    app_role: {
+      type: String,
+      enum: ['user', 'board_member', 'admin'],
+      default: 'user'
+    },
     phoneVerifiedAt: Date,
     avatar: String,
     facebook: String,

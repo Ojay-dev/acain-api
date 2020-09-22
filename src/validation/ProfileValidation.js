@@ -16,7 +16,8 @@ class ProfileValidation {
       name: format.name,
       facebook: Joi.string(),
       twitter: Joi.string(),
-      linkedIn: Joi.string()
+      linkedIn: Joi.string(),
+      about: Joi.sring()
     });
 
     return validator(schema, req.body, res, next);
