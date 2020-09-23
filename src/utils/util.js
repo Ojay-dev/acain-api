@@ -1,4 +1,9 @@
+/* eslint-disable arrow-body-style */
+/* eslint-disable operator-linebreak */
 import sendGrid from '@sendgrid/mail';
+import Formidable from 'formidable';
+import cloudinary from 'cloudinary';
+import { customError } from '../errors';
 
 export const duplicateCheck = async (Model, param) => {
   const check = await Model.findOne(param);
@@ -50,7 +55,63 @@ export const strRandom = async (length = 10, accept, invert = false) => {
   }
   return strRandom(length, accept);
 };
-
+export const uploadFile = async (req, key, options, cb) => {
+  return new Promise((resolve, reject) => {
+    cb =
+      cb && typeof cb === 'function'
+        ? cb
+        : (err, res) => {
+            if (err) {
+              return reject(err);
+            }
+            return resolve(res);
+          };
+    if (
+      !req.headers['content-type'] ||
+      req.headers['content-type'].indexOf('multipart/form-data;') === -1
+    ) {
+      return cb(
+        customError(
+          'use multipart/form-data content-type header for this',
+          'Bad Request',
+          400,
+          false
+        )
+      );
+    }
+    const form = new Formidable.IncomingForm();
+    form.parse(req, (err, fields, files) => {
+      if (err) {
+        return cb(err);
+      }
+      if (!files[key]) {
+        return cb(
+          customError('avatar is required', 'Validation Error', 422, false)
+        );
+      }
+      const cloud = cloudinary.v2;
+      cloud.config({
+        cloud_name: process.env.CLOUDINARY_NAME,
+        api_key: process.env.CLOUDINARY_KEY,
+        api_secret: process.env.CLOUDINARY_SECRET
+      });
+      return cloud.uploader.upload(
+        files[key].path,
+        options,
+        async (error, result) => {
+          if (error) {
+            return cb(error);
+          }
+          return cb(null, result);
+          // const user = await ProfileService.updateBasicProfile(req.user, {
+          //   avatar: result.url
+          // });
+          // return Response.customResponse(res, 200, 'avatar updated', user);
+        }
+      );
+    });
+  });
+};
 export default {
   duplicateCheck,
   parallelRequests

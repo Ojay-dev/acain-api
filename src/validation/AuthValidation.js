@@ -17,7 +17,8 @@ class AuthValidation {
       email: format.email.required(),
       name: format.name.required(),
       password: format.password.required(),
-      phone: format.phone.required()
+      phone: format.phone.required(),
+      about: format.pubDescription
     });
     return validator(schema, req.body, res, next);
   }

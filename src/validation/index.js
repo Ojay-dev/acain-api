@@ -26,5 +26,7 @@ export default {
     ),
   phone: Joi.string()
     .regex(/^\+[1-9]{1,3}[0-9]{3,14}$/)
-    .message('input phone number with country code. ex, +234...')
+    .message('input phone number with country code. ex, +234...'),
+  pubTitle: Joi.string().min(4),
+  pubDescription: Joi.string().min(20)
 };

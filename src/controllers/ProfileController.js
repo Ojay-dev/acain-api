@@ -1,11 +1,10 @@
 /* eslint-disable object-curly-newline */
 /* eslint-disable no-underscore-dangle */
 /* eslint-disable operator-linebreak */
-import Formidable from 'formidable';
-import cloudinary from 'cloudinary';
 
 import ProfileService from '../services/ProfileService';
 import Response from '../utils/response';
+import { uploadFile } from '../utils/util';
 
 /** class that handles profile controller */
 class ProfileController {
@@ -117,49 +116,15 @@ class ProfileController {
    */
   static async updateAvatar(req, res, next) {
     try {
-      if (
-        !req.headers['content-type'] ||
-        req.headers['content-type'].indexOf('multipart/form-data;') === -1
-      ) {
-        return Response.badRequestError(
-          res,
-          'use multipart/form-data content-type for this'
-        );
-      }
-      const form = new Formidable.IncomingForm();
-      form.parse(req, (err, fields, files) => {
-        if (err) {
-          return next(err);
-        }
-        if (!files.avatar) {
-          Response.badRequestError(res, '"avatar" is required');
-        }
-        const cloud = cloudinary.v2;
-        cloud.config({
-          cloud_name: process.env.CLOUDINARY_NAME,
-          api_key: process.env.CLOUDINARY_KEY,
-          api_secret: process.env.CLOUDINARY_SECRET
-        });
-        cloud.uploader.upload(
-          files.avatar.path,
-          {
-            transformation: [
-              { width: 200, height: 200, gravity: 'face', crop: 'thumb' }
-            ],
-            public_id: `avatars/${req.user._id}`,
-            format: 'png'
-          },
-          async (error, result) => {
-            if (error) {
-              next(error);
-            }
-            const user = await ProfileService.updateBasicProfile(req.user, {
-              avatar: result.url
-            });
-            return Response.customResponse(res, 200, 'avatar updated', user);
-          }
-        );
+      const result = await uploadFile(req, 'avatar', {
+        transformation: [{ width: 200, height: 200 }],
+        public_id: `avatars/${req.user._id}`,
+        format: 'png'
       });
+      const user = await ProfileService.updateBasicProfile(req.user, {
+        avatar: result.url
+      });
+      return Response.customResponse(res, 200, 'avatar updated', user);
     } catch (error) {
       next(error);
     }
