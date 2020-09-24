@@ -5,8 +5,8 @@ export const signToken = (payload) => {
   const token = jwt.sign(
     {
       exp:
-        Date.now() / 100 +
-        86400 * (parseFloat(process.env.JWTExpireDays || 1) || 1),
+        Date.now() +
+        86400000 * (parseFloat(process.env.JWTExpireDays || 1) || 1),
       payload
     },
     process.env.JWTSecret

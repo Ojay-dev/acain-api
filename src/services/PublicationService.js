@@ -18,7 +18,7 @@ class PublicationService {
         () => {
           return Publications.find({ ...param, isDeleted: false })
             .sort([['createdAt', -1]])
-            .populate({ path: 'author', select: 'name' })
+            .populate({ path: 'author', select: 'name about' })
             .skip((page - 1) * limit)
             .limit(limit);
         }
@@ -65,7 +65,7 @@ class PublicationService {
       ...param,
       isDeleted: false
     })
-      .populate({ path: 'author', select: 'name _id' })
+      .populate({ path: 'author', select: 'name about' })
       .exec();
     if (!publication) {
       customError('publication not found', 'Not Found', 404);

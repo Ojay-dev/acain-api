@@ -221,9 +221,11 @@ class AuthService {
    * Middleware that decode user from
    * jwt in authorization and attaches
    * user to the request object or fails.
+   * @param {array} permitted array of allowed
+   * app roles.
    * @returns {function} middleware function
    */
-  static protectRoute() {
+  static protectRoute(permitted) {
     return async (req, res, next) => {
       try {
         const token = req.headers.authorization;
@@ -234,10 +236,18 @@ class AuthService {
           );
         }
         const data = verifyToken(token);
+        if (Date.now() > data.exp) {
+          return Response.authorizationError(res, 'token expired');
+        }
         const _id = data.payload;
         const user = await User.findById(_id);
         if (!user) {
           return Response.authenticationError(res, 'unauthenticated');
+        }
+        if (Array.isArray(permitted) && permitted.length > 0) {
+          if (permitted.indexOf(user.app_role) === -1) {
+            return Response.authorizationError(res, 'unauthorized');
+          }
         }
         req.user = user;
         next();
