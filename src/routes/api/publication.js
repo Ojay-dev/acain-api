@@ -7,7 +7,6 @@ const router = Router();
 
 router.param('id', PublicationController.pubIdParamRoute);
 
-router.route('/:id').get(PublicationController.getSinglePublication);
 router.get('/', PublicationController.getAllPublications);
 
 router.use('/my-publications', AuthService.protectRoute());
@@ -18,6 +17,10 @@ router
     PublicationValidation.validatePublicationCreation,
     PublicationController.createSinglePublication
   );
+router.put(
+  '/my-publications/:id/image',
+  PublicationController.updateSinglePublicationImage
+);
 router
   .route('/my-publications/:id')
   .get(PublicationController.getSinglePublication)
@@ -26,9 +29,6 @@ router
     PublicationController.updateSinglePublication
   )
   .delete(PublicationController.deleteSinglePublication);
-router.put(
-  '/my-publications/:id/image',
-  PublicationController.updateSinglePublicationImage
-);
+router.route('/:id').get(PublicationController.getSinglePublication);
 
 export default router;

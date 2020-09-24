@@ -72,6 +72,9 @@ class PublicationController {
       req.pub = await PublicationService.getSinglePublication({ _id });
       next();
     } catch (error) {
+      if (error.name === 'CastError') {
+        return Response.notFoundError(res, 'publication not found');
+      }
       next(error);
     }
   }
@@ -95,7 +98,7 @@ class PublicationController {
    */
   static async updateSinglePublication(req, res, next) {
     try {
-      if (req.pub.author._id !== req.user._id) {
+      if (req.pub.author._id.toString() !== req.user._id.toString()) {
         return Response.authorizationError(res, 'unauthorized');
       }
       const update = await PublicationService.updateSinglePublication(
@@ -117,7 +120,7 @@ class PublicationController {
    */
   static async deleteSinglePublication(req, res, next) {
     try {
-      if (req.pub.author._id !== req.user._id) {
+      if (req.pub.author._id.toString() !== req.user._id.toString()) {
         return Response.authorizationError(res, 'unauthorized');
       }
       await PublicationService.deleteSinglePublication(req.pub);
@@ -136,7 +139,7 @@ class PublicationController {
    */
   static async updateSinglePublicationImage(req, res, next) {
     try {
-      if (req.pub.author._id !== req.user._id) {
+      if (req.pub.author._id.toString() !== req.user._id.toString()) {
         return Response.authorizationError(res, 'unauthorized');
       }
       const result = await uploadFile(req, 'image', {

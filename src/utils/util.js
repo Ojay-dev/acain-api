@@ -86,7 +86,7 @@ export const uploadFile = async (req, key, options, cb) => {
       }
       if (!files[key]) {
         return cb(
-          customError('avatar is required', 'Validation Error', 422, false)
+          customError(`${key} is required`, 'Validation Error', 422, false)
         );
       }
       const cloud = cloudinary.v2;
@@ -103,10 +103,6 @@ export const uploadFile = async (req, key, options, cb) => {
             return cb(error);
           }
           return cb(null, result);
-          // const user = await ProfileService.updateBasicProfile(req.user, {
-          //   avatar: result.url
-          // });
-          // return Response.customResponse(res, 200, 'avatar updated', user);
         }
       );
     });

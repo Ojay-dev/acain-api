@@ -9,6 +9,6 @@ const router = Router();
 
 router.use('/auth', auth);
 router.use('/profile', AuthService.protectRoute(), profile);
-router.use('publications', publications);
+router.use('/publications', publications);
 
 export default router;

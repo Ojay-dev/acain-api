@@ -117,7 +117,9 @@ class ProfileController {
   static async updateAvatar(req, res, next) {
     try {
       const result = await uploadFile(req, 'avatar', {
-        transformation: [{ width: 200, height: 200 }],
+        transformation: [
+          { width: 200, height: 200, gravity: 'face', crop: 'thumb' }
+        ],
         public_id: `avatars/${req.user._id}`,
         format: 'png'
       });

@@ -12,7 +12,7 @@ class PublicationValidation {
    * @return {function} validator function
    */
   static validatePublicationCreation(req, res, next) {
-    const schema = Joi.object.keys({
+    const schema = Joi.object().keys({
       title: format.pubTitle.required(),
       description: format.pubDescription.required()
     });
@@ -28,7 +28,7 @@ class PublicationValidation {
    * @return {function} validator function
    */
   static validatePublicationUpdate(req, res, next) {
-    const schema = Joi.object.keys({
+    const schema = Joi.object().keys({
       title: format.pubTitle,
       description: format.pubDescription
     });
