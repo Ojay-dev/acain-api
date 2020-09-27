@@ -44,8 +44,6 @@ class AuthService {
       <p>
           <span><a href="${process.env.EmailVerificationCallback}?code=${code}">${process.env.EmailVerificationCallback}?code=${code}</a></span>
       </p>
-      <br>
-          We love you!
       <p></p>
       <br><br>
       <span>Regards,</span>

@@ -30,7 +30,7 @@ class BoardMemberController {
   static async getSingleBoardMember(req, res, next) {
     try {
       const data = await BoardMemberService.getSingleBoardMember({
-        _id: req.param.id
+        _id: req.params.id
       });
       return Response.customResponse(res, 200, 'board member', data);
     } catch (error) {

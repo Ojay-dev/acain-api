@@ -61,9 +61,9 @@ class BoardMemberService {
    * @param {object} data create data
    * @returns {object} board member object
    */
-  static createSingleBoardMember(data) {
+  static async createSingleBoardMember(data) {
     data.app_role = 'board_member';
-    data.password = data.password || strRandom(32);
+    data.password = data.password || (await strRandom(32));
     return AuthService.createSingleUser(data);
   }
 }

@@ -20,9 +20,9 @@ export default {
       'password must be 8-20 characters long, and must contain at least one letter, one number and one special character'
     ),
   name: Joi.string()
-    .regex(/^[a-zA-Z]{3,}(?: [a-zA-Z]+){0,2}$/)
+    .regex(/^[a-zA-Z.]{2,}(?: [a-zA-Z]+){0,2}$/)
     .message(
-      'name should be at least 4 characters long and just your first and last name'
+      'name should be at least 4 characters long and firstname and lastname'
     ),
   phone: Joi.string()
     .regex(/^\+[1-9]{1,3}[0-9]{3,14}$/)
