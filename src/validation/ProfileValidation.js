@@ -19,7 +19,8 @@ class ProfileValidation {
       linkedIn: Joi.string(),
       about: format.pubDescription,
       profession: format.profession.optional(),
-      membershipType: format.membershipType.optional()
+      membershipType: format.membershipType.optional(),
+      address: format.address
     });
 
     return validator(schema, req.body, res, next);

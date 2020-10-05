@@ -8,7 +8,6 @@ const configureDB = async () => {
       useFindAndModify: false,
       useCreateIndex: true
     });
-    console.log('Successfully connected to MongoDB Atlas!');
   } catch (error) {
     console.log('Unable to connect to MongoDB: ', error);
   }

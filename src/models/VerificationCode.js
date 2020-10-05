@@ -1,4 +1,4 @@
-import { model, Schema } from 'mongoose';
+import mongoose, { model, Schema } from 'mongoose';
 
 const VerificationCodeSchema = new Schema(
   {
@@ -26,4 +26,6 @@ const VerificationCodeSchema = new Schema(
   { timestamps: true }
 );
 
-export default model('verification_code', VerificationCodeSchema);
+// eslint-disable-next-line operator-linebreak
+export default mongoose.models.verification_code ||
+  model('verification_code', VerificationCodeSchema);

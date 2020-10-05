@@ -20,7 +20,8 @@ class AuthValidation {
       password: format.password.required(),
       phone: format.phone.required(),
       about: format.pubDescription,
-      membershipType: format.membershipType.required()
+      membershipType: format.membershipType.required(),
+      address: format.address.required()
     });
     return validator(schema, req.body, res, next);
   }

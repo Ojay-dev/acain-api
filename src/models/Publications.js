@@ -1,4 +1,4 @@
-import { model, Schema } from 'mongoose';
+import mongoose, { model, Schema } from 'mongoose';
 
 const PublicationSchema = new Schema(
   {
@@ -24,4 +24,6 @@ const PublicationSchema = new Schema(
   { timestamps: true }
 );
 
-export default model('publication', PublicationSchema);
+// eslint-disable-next-line operator-linebreak
+export default mongoose.models.publication ||
+  model('publication', PublicationSchema);

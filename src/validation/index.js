@@ -31,17 +31,20 @@ export default {
   pubDescription: Joi.string().min(20),
   profession: Joi.alternatives(
     Joi.object().keys({
-      isIllustrator: Joi.boolean()
+      isIllustrator: Joi.boolean().required()
     }),
     Joi.object().keys({
-      isAuthor: Joi.boolean()
+      isAuthor: Joi.boolean().required()
     }),
     Joi.object().keys({
       isIllustrator: Joi.boolean(),
       isAuthor: Joi.boolean()
     })
-  ).message('You must either be an author or illustrator or both'),
-  membershipType: Joi.regex(/(associate_membership|full_membership)/).message(
-    'value can only be one of associate_membership and full_membership'
-  )
+  ),
+  address: Joi.string(),
+  membershipType: Joi.string()
+    .regex(/(associate_membership|full_membership)/)
+    .message(
+      'value can only be one of associate_membership and full_membership'
+    )
 };

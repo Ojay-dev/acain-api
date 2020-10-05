@@ -1,5 +1,5 @@
 /* eslint-disable no-underscore-dangle */
-import { model, Schema } from 'mongoose';
+import mongoose, { model, Schema } from 'mongoose';
 import bcrypt from 'bcrypt';
 
 const UserSchema = new Schema(
@@ -99,4 +99,4 @@ UserSchema.methods = {
   }
 };
 
-export default model('user', UserSchema);
+export default mongoose.models.user || model('user', UserSchema);
