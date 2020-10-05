@@ -28,5 +28,20 @@ export default {
     .regex(/^\+[1-9]{1,3}[0-9]{3,14}$/)
     .message('input phone number with country code. ex, +234...'),
   pubTitle: Joi.string().min(4),
-  pubDescription: Joi.string().min(20)
+  pubDescription: Joi.string().min(20),
+  profession: Joi.alternatives(
+    Joi.object().keys({
+      isIllustrator: Joi.boolean()
+    }),
+    Joi.object().keys({
+      isAuthor: Joi.boolean()
+    }),
+    Joi.object().keys({
+      isIllustrator: Joi.boolean(),
+      isAuthor: Joi.boolean()
+    })
+  ).message('You must either be an author or illustrator or both'),
+  membershipType: Joi.regex(/(associate_membership|full_membership)/).message(
+    'value can only be one of associate_membership and full_membership'
+  )
 };

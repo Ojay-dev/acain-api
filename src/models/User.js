@@ -42,9 +42,24 @@ const UserSchema = new Schema(
     about: {
       type: String
     },
-    role: {
+    address: {
       type: String,
-      default: 'author'
+      required: true
+    },
+    membershipType: {
+      type: String,
+      default: 'associate_membership',
+      enum: ['associate_membership', 'full_membership']
+    },
+    profession: {
+      isAuthor: {
+        type: Boolean,
+        default: false
+      },
+      isIllustrator: {
+        type: Boolean,
+        default: false
+      }
     },
     app_role: {
       type: String,

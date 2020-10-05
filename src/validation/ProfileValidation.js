@@ -17,7 +17,9 @@ class ProfileValidation {
       facebook: Joi.string(),
       twitter: Joi.string(),
       linkedIn: Joi.string(),
-      about: format.pubDescription
+      about: format.pubDescription,
+      profession: format.profession.optional(),
+      membershipType: format.membershipType.optional()
     });
 
     return validator(schema, req.body, res, next);
