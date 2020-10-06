@@ -15,7 +15,8 @@ class AuthValidation {
     const schema = Joi.object().keys({
       username: format.username.required(),
       email: format.email.required(),
-      name: format.name.required(),
+      firstname: format.name.required(),
+      lastname: format.name.required(),
       profession: format.profession.required(),
       password: format.password.required(),
       phone: format.phone.required(),

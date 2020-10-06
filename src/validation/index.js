@@ -22,7 +22,7 @@ export default {
   name: Joi.string()
     .regex(/^[a-zA-Z.]{2,}(?: [a-zA-Z]+){0,2}$/)
     .message(
-      'name should be at least 4 characters long and firstname and lastname'
+      'name should be at least 4 characters long'
     ),
   phone: Joi.string()
     .regex(/^\+[1-9]{1,3}[0-9]{3,14}$/)
