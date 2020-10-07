@@ -13,7 +13,6 @@ class AuthValidation {
    */
   static validateUserCreation(req, res, next) {
     const schema = Joi.object().keys({
-      username: format.username.required(),
       email: format.email.required(),
       firstname: format.name.required(),
       lastname: format.name.required(),
@@ -22,7 +21,9 @@ class AuthValidation {
       phone: format.phone.required(),
       about: format.pubDescription,
       membershipType: format.membershipType.required(),
-      address: format.address.required()
+      address: format.address.required(),
+      city: format.city.required(),
+      state: format.state.required()
     });
     return validator(schema, req.body, res, next);
   }

@@ -80,20 +80,17 @@ class AuthService {
    * @return {object} user object
    */
   static async createSingleUser(data) {
-    const [email, phone, username] = await parallelRequests(
+    const [email, phone] = await parallelRequests(
       [duplicateCheck, User, { email: data.email }],
-      [duplicateCheck, User, { phone: data.phone }],
-      [duplicateCheck, User, { username: data.username }]
+      [duplicateCheck, User, { phone: data.phone }]
     );
     if (email) {
-      customError('email is already being used', 'Bad Request', 400);
+      customError('Email has already been used!', 'Bad Request', 400);
     }
     if (phone) {
-      customError('phone is already being used', 'Bad Request', 400);
+      customError('Phone has already been used!', 'Bad Request', 400);
     }
-    if (username) {
-      customError('username is already being used', 'Bad Request', 400);
-    }
+
     // eslint-disable-next-line prefer-const
     const user = (await User.create(data)).toJSON();
     user.access_token = signToken(user._id);
@@ -114,8 +111,12 @@ class AuthService {
    */
   static async authenticateSingleUser(param) {
     const user = await User.findOne({ email: param.email });
-    if (!user || !user.authenticate(param.password)) {
-      customError('invalid credentials', 'Authentication Error', 401);
+    if (!user || !(await user.authenticate(param.password))) {
+      customError(
+        'email or password is incorrect!',
+        'Authentication Error',
+        401
+      );
     }
     const token = signToken(user._id);
 

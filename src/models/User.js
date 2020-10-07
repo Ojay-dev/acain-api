@@ -14,12 +14,6 @@ const UserSchema = new Schema(
       required: true,
       trim: true
     },
-    username: {
-      type: String,
-      required: true,
-      unique: true,
-      trim: true
-    },
     email: {
       type: String,
       required: true,
@@ -48,6 +42,14 @@ const UserSchema = new Schema(
       type: String
     },
     address: {
+      type: String,
+      required: true
+    },
+    city: {
+      type: String,
+      required: true
+    },
+    state: {
       type: String,
       required: true
     },
