@@ -1,4 +1,4 @@
-import mongoose, { model, Schema } from 'mongoose';
+import { model, Schema } from 'mongoose';
 
 const SubscriberSchema = new Schema(
   {
@@ -16,5 +16,4 @@ const SubscriberSchema = new Schema(
 );
 
 // eslint-disable-next-line operator-linebreak
-export default mongoose.models.subscriber ||
-  model('subscriber', SubscriberSchema);
+export default model('subscriber', SubscriberSchema);

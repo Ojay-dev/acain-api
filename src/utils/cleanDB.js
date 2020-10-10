@@ -1,5 +1,6 @@
 import Contacts from '../models/Contacts';
 import Events from '../models/Events';
+import Payment from '../models/Payment';
 import Publications from '../models/Publications';
 import Subscribers from '../models/Subscribers';
 import User from '../models/User';
@@ -15,6 +16,7 @@ export default async () => {
     [empytModel, Events],
     [empytModel, Publications],
     [empytModel, Subscribers],
-    [empytModel, VerificationCode]
+    [empytModel, VerificationCode],
+    [empytModel, Payment]
   );
 };

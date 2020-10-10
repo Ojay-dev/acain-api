@@ -216,14 +216,35 @@ class AuthService {
   }
 
   /**
+   * updates payment status
+   * @returns {object} user
+   */
+  static async updatePayment({ _id, membershipType }) {
+    const user = await User.findOne({ _id });
+    if (user.lastPayment) {
+      const lastPayment = new Date(user.lastPayment);
+      if (lastPayment.setFullYear(lastPayment.getFullYear() + 1).getTime() < Date.now()) {
+        user.lastPayment = lastPayment;
+      } else {
+        user.lastPayment = new Date();
+      }
+    } else {
+      user.lastPayment = new Date();
+    }
+    user.membershipType = membershipType;
+    return user.save();
+  }
+
+  /**
    * Middleware that decode user from
    * jwt in authorization and attaches
    * user to the request object or fails.
    * @param {array} permitted array of allowed
+   * @param {boolean} requirePayment
    * app roles.
    * @returns {function} middleware function
    */
-  static protectRoute(permitted) {
+  static protectRoute(permitted, requirePayment = false) {
     return async (req, res, next) => {
       try {
         const token = req.headers.authorization;
@@ -245,6 +266,16 @@ class AuthService {
         if (Array.isArray(permitted) && permitted.length > 0) {
           if (permitted.indexOf(user.app_role) === -1) {
             return Response.authorizationError(res, 'unauthorized');
+          }
+        }
+        if (requirePayment && user.app_role !== 'admin') {
+          if (!user.lastPayment) {
+            return Response.authorizationError(res, 'you have to be a member for this operation');
+          }
+          const payment = new Date(user.lastPayment);
+          payment.setFullYear(payment.getFullYear() + 1);
+          if (payment.getTime() < Date.now()) {
+            return Response.authorizationError(res, 'please renew your membership to continue using the service');
           }
         }
         req.user = user;

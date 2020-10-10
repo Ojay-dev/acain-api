@@ -1,4 +1,3 @@
-import '@babel/polyfill';
 import assert from 'assert';
 import request from 'supertest';
 // import _ from 'lodash';
@@ -9,6 +8,7 @@ import cleanDB from '../src/utils/cleanDB';
 describe('singup route', () => {
   beforeEach(async () => {
     await cleanDB();
+    return '';
   });
 
   it('should successfully create a users', (done) => {
