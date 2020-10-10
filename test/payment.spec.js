@@ -15,7 +15,10 @@ describe('payment functionality', () => {
   beforeEach(async () => {
     await cleanDB();
     user = await User.create({
-      name: 'John Dewey',
+      firstname: 'John',
+      lastname: 'Dewey',
+      state: 'Arghh',
+      city: 'town hall',
       username: 'j_dewey',
       email: 'j@d.wey',
       password: 'chameleon',
