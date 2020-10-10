@@ -9,11 +9,6 @@ export default {
     })
     .trim()
     .required(),
-  username: Joi.string()
-    .regex(/^(?=.{4,20}$)(?![_.])(?!.*[_.]{2})[a-zA-Z0-9._]+(?<![_.])$/)
-    .message(
-      'username must be 4 to 20 characters long and should contain no spaces'
-    ),
   password: Joi.string()
     .regex(/^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?.&])[A-Za-z\d@$!%*.#?&]{8,20}$/)
     .message(
@@ -21,9 +16,7 @@ export default {
     ),
   name: Joi.string()
     .regex(/^[a-zA-Z.]{2,}(?: [a-zA-Z]+){0,2}$/)
-    .message(
-      'name should be at least 4 characters long and firstname and lastname'
-    ),
+    .message('name should be at least 4 characters long'),
   phone: Joi.string()
     .regex(/^\+[1-9]{1,3}[0-9]{3,14}$/)
     .message('input phone number with country code. ex, +234...'),
@@ -42,6 +35,8 @@ export default {
     })
   ),
   address: Joi.string(),
+  city: Joi.string().regex(/^[A-Za-z]+$/).message('city should only be letters'),
+  state: Joi.string().regex(/^[A-Za-z]+$/).message('state should only be letters'),
   membershipType: Joi.string()
     .regex(/(associate_membership|full_membership)/)
     .message(
