@@ -9,7 +9,7 @@ router.param('id', PublicationController.pubIdParamRoute);
 
 router.get('/', PublicationController.getAllPublications);
 
-router.use('/my-publications', AuthService.protectRoute());
+router.use('/my-publications', AuthService.protectRoute([], true));
 router
   .route('/my-publications')
   .get(PublicationController.getAllPublicationsAuth)

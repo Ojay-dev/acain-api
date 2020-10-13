@@ -1,5 +1,5 @@
 /* eslint-disable no-underscore-dangle */
-import mongoose, { model, Schema } from 'mongoose';
+import { model, Schema } from 'mongoose';
 import bcrypt from 'bcrypt';
 
 const UserSchema = new Schema(
@@ -73,6 +73,7 @@ const UserSchema = new Schema(
       enum: ['user', 'board_member', 'admin'],
       default: 'user'
     },
+    lastPayment: Date,
     phoneVerifiedAt: Date,
     avatar: String,
     facebook: String,
@@ -106,4 +107,4 @@ UserSchema.methods = {
   }
 };
 
-export default mongoose.models.user || model('user', UserSchema);
+export default model('user', UserSchema);

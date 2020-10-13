@@ -1,4 +1,3 @@
-import '@babel/polyfill';
 import assert from 'assert';
 import request from 'supertest';
 // import _ from 'lodash';
@@ -9,12 +8,15 @@ import cleanDB from '../src/utils/cleanDB';
 describe('singup route', () => {
   beforeEach(async () => {
     await cleanDB();
+    return '';
   });
 
   it('should successfully create a users', (done) => {
     const data = {
-      name: 'test user',
-      username: 'test_user',
+      firstname: 'John',
+      lastname: 'Dewey',
+      state: 'Arghh',
+      city: 'townhall',
       email: 'test@user.com',
       emailVerifiedAt: Date,
       password: 'SOM3STORNGP4SSWORD.',
@@ -32,6 +34,7 @@ describe('singup route', () => {
       .send(data)
       .end((err, res) => {
         if (err) {
+          console.log(res.body);
           return done(err);
         }
         const { data: resp } = res.body;
