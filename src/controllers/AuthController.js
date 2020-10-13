@@ -113,7 +113,7 @@ class AuthController {
     try {
       const { code = '' } = req.query;
       await AuthService.changePasswordFromCode(code, req.body);
-      Response.customResponse(res, 200, 'password changed', true);
+      Response.customResponse(res, 200, 'Your password has been changed successfully!', true);
     } catch (error) {
       next(error);
     }
