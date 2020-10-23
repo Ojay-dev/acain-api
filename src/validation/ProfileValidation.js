@@ -13,14 +13,21 @@ class ProfileValidation {
    */
   static validateBasicProfileUpdate(req, res, next) {
     const schema = Joi.object().keys({
-      name: format.name,
+      firstname: format.name,
+      lastname: format.name,
       facebook: Joi.string(),
       twitter: Joi.string(),
       linkedIn: Joi.string(),
+      instagram: Joi.string(),
+      website: Joi.string(),
+      organisation: Joi.string(),
       about: format.pubDescription,
       profession: format.profession.optional(),
       membershipType: format.membershipType.optional(),
-      address: format.address
+      address: format.address,
+      phone: format.phone,
+      city: format.city,
+      state: format.state
     });
 
     return validator(schema, req.body, res, next);

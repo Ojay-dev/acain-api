@@ -8,7 +8,13 @@ const router = Router();
 router.use(AuthService.protectRoute());
 router
   .route('/')
-  .post(PaymentValidation.validatePaymentCreation, PaymentController.startPaymentProcess)
-  .put(PaymentValidation.validatePaymentVerification, PaymentController.verifyPayment);
+  .post(
+    PaymentValidation.validatePaymentCreation,
+    PaymentController.startPaymentProcess
+  )
+  .put(
+    PaymentValidation.validatePaymentVerification,
+    PaymentController.verifyPayment
+  );
 
 export default router;

@@ -78,7 +78,10 @@ const UserSchema = new Schema(
     avatar: String,
     facebook: String,
     twitter: String,
-    linkedIn: String
+    linkedIn: String,
+    instagram: String,
+    website: String,
+    organisation: String
   },
   { timestamps: true }
 );

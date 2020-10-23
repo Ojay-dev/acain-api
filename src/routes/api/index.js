@@ -13,7 +13,7 @@ import pay from './pay';
 const router = Router();
 
 router.use('/auth', auth);
-router.use('/profile', AuthService.protectRoute([], true), profile);
+router.use('/profile', AuthService.protectRoute([], false), profile);
 router.use('/publications', publications);
 router.use('/board_members', boardMember);
 router.use('/subscribers', subscribers);

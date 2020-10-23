@@ -13,11 +13,9 @@ class PaymentValidation {
    * @return {function} validator function
    */
   static validatePaymentCreation(req, res, next) {
-    const schema = Joi.object().keys(
-      {
-        membershipType: format.membershipType.required()
-      }
-    );
+    const schema = Joi.object().keys({
+      membershipType: format.membershipType.required()
+    });
 
     return validator(schema, req.body, res, next);
   }
@@ -30,12 +28,10 @@ class PaymentValidation {
    * @return {function} validator function
    */
   static validatePaymentVerification(req, res, next) {
-    const schema = Joi.object().keys(
-      {
-        transRef: Joi.string().required(),
-        transID: Joi.string().required()
-      }
-    );
+    const schema = Joi.object().keys({
+      transRef: Joi.string().required(),
+      transID: Joi.string().required()
+    });
 
     return validator(schema, req.body, res, next);
   }

@@ -224,7 +224,10 @@ class AuthService {
     const user = await User.findOne({ _id });
     if (user.lastPayment) {
       const lastPayment = new Date(user.lastPayment);
-      if (lastPayment.setFullYear(lastPayment.getFullYear() + 1).getTime() < Date.now()) {
+      if (
+        lastPayment.setFullYear(lastPayment.getFullYear() + 1).getTime() <
+        Date.now()
+      ) {
         user.lastPayment = lastPayment;
       } else {
         user.lastPayment = new Date();
@@ -271,12 +274,18 @@ class AuthService {
         }
         if (requirePayment && user.app_role !== 'admin') {
           if (!user.lastPayment) {
-            return Response.authorizationError(res, 'you have to be a member for this operation');
+            return Response.authorizationError(
+              res,
+              'you have to be a member for this operation'
+            );
           }
           const payment = new Date(user.lastPayment);
           payment.setFullYear(payment.getFullYear() + 1);
           if (payment.getTime() < Date.now()) {
-            return Response.authorizationError(res, 'please renew your membership to continue using the service');
+            return Response.authorizationError(
+              res,
+              'please renew your membership to continue using the service'
+            );
           }
         }
         req.user = user;
